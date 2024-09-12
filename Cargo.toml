@@ -1,0 +1,12 @@
+[package]
+name = "config"
+version = "0.1.0"
+edition = "2021"
+authors = [
+    "Cloudiful"
+]
+
+[dependencies]
+log = "0.4.22"
+serde = { version = "1.0.210", features = ["derive"] }
+toml = "0.8.19"
