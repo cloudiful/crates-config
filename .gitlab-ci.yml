@@ -1,0 +1,13 @@
+test:
+  stage: test
+  variables:
+    CARGO_HOME: $CI_PROJECT_DIR/.cargo/
+  image: rust:latest
+  tags:
+    - docker
+  script:
+    - rustc --version && cargo --version  # Print version info for debugging
+    - cargo test --package config --lib tests
+  cache:
+    paths:
+      - $CARGO_HOME
