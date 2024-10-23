@@ -53,9 +53,22 @@ mod tests {
         hello: i32,
     }
 
+    impl Conf {
+        fn new(num: i32) -> Conf{
+            Conf{
+                hello: num,
+            }
+        }
+    }
+
     #[test]
     fn it_works() {
         let conf: Conf = read(PathBuf::from("config.toml")).unwrap();
         assert_eq!(conf.hello, 1);
+
+        save(PathBuf::from("config.toml"), Conf::new(32));
+        let conf2: Conf = read(PathBuf::from("config.toml")).unwrap();
+
+        assert_eq!(conf2.hello, 32)
     }
 }
