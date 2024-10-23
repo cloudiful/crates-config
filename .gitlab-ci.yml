@@ -7,7 +7,7 @@ test:
     - docker
   script:
     - rustc --version && cargo --version  # Print version info for debugging
-    - cargo test --package cache --lib tests
+    - cargo test --package config --lib tests
   cache:
     paths:
       - $CARGO_HOME
