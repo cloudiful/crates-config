@@ -1,7 +1,5 @@
 use log::info;
-use crate::config::Config;
-
-mod config;
+use config::Config;
 
 fn main() {
     let config = Config::read("Cargo.toml").unwrap();
