@@ -5,6 +5,7 @@ edition = "2021"
 authors = [
     "Cloudiful"
 ]
+repository = "https://cloudiful.cn:59443/crates/config"
 
 [dependencies]
 log = "0.4.22"
