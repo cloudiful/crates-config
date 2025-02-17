@@ -26,7 +26,7 @@ where
 /// Read config from a toml file
 pub fn read<T>(path: PathBuf) -> Option<T>
 where
-    T: serde::de::DeserializeOwned,
+    T: serde::de::DeserializeOwned + Default + serde::Serialize,
 {
     let config_file = &path;
 
@@ -37,6 +37,11 @@ where
             let config: T = toml::from_str(&content).expect("parsing toml error");
             Some(config)
         }
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            let default_config = T::default();
+            save(path.clone(), &default_config);
+            Some(default_config)
+        }
         Err(e) => {
             warn!("{}", e);
             None
@@ -46,27 +51,32 @@ where
 
 #[cfg(test)]
 mod tests {
+    use std::fs::remove_file;
     use super::*;
 
     #[derive(Serialize, Deserialize, Debug)]
     struct Conf {
         hello: i32,
+        name: String,
     }
 
-    impl Conf {
-        fn new(num: i32) -> Conf{
+    impl Default for Conf {
+        fn default() -> Self {
             Conf{
-                hello: num,
+                hello: 32,
+                name: "hello".to_string(),
             }
         }
     }
 
     #[test]
     fn it_works() {
-        let conf: Conf = read(PathBuf::from("config.toml")).unwrap();
-        assert_eq!(conf.hello, 1);
+        remove_file("config.toml").unwrap();
 
-        save(PathBuf::from("config.toml"), Conf::new(32));
+        let conf: Conf = read(PathBuf::from("config.toml")).unwrap();
+        assert_eq!(conf.name, "hello".to_string());
+
+        save(PathBuf::from("config.toml"), Conf::default());
         let conf2: Conf = read(PathBuf::from("config.toml")).unwrap();
 
         assert_eq!(conf2.hello, 32)
