@@ -1,6 +1,6 @@
 [package]
 name = "config"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = [
     "Cloudiful"
@@ -8,6 +8,6 @@ authors = [
 repository = "https://cloudiful.cn:59443/crates/config"
 
 [dependencies]
-log = "0.4.22"
-serde = { version = "1.0.210", features = ["derive"] }
-toml = "0.8.19"
+log = "0.4.25"
+serde = { version = "1.0.217", features = ["derive"] }
+toml = "0.8.20"
