@@ -71,8 +71,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        remove_file("config.toml").unwrap();
-
         let conf: Conf = read(PathBuf::from("config.toml")).unwrap();
         assert_eq!(conf.name, "hello".to_string());
 
